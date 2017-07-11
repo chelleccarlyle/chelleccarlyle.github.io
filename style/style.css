@@ -1,0 +1,15 @@
+body, html {
+  display: block;
+  margin: auto;
+  font-family: 'Lato', sans-serif;
+}
+
+#canvas { width: 50%; height: 50%; margin: 0 auto; }
+#container {
+    display: block;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    letter-spacing: 5px;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	<link rel="stylesheet" href="style/style.css">
+		<meta charset=utf-8>
+		<title>Chelle Cruz | Web Developer</title>
+	</head>
+	<body>
+		<div class="container-fluid">
+
+			<div class="page-header">
+			<h1>CHELLE CRUZ | WEB DEVELOPER</h1>
+			</div>
+
+			<h3>THREE.JS: FIRST PROJECT</h3>
+
+			<div id="canvas">
+
+		<script src="js/three.js"></script>
+		<script src = "js/Detector.js"></script>
+		<script src = "js/OrbitControls.js"></script>
+		<script>
+			// Our Javascript will go here.
+			//Check for support of WebGL
+			if (Detector.webgl) {
+    			init();
+			} else {
+    			var warning = Detector.getWebGLErrorMessage();
+    			document.getElementById('container').appendChild(warning);
+			}
+
+			function init() {
+
+				var container = document.getElementById( 'canvas' );
+				document.body.appendChild( container );
+
+				var scene = new THREE.Scene();
+				var camera = new THREE.PerspectiveCamera( 75, (window.innerWidth) / (window.innerHeight), 0.1, 1000 );
+				var controls = new THREE.OrbitControls(camera);
+
+				var renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight);
+				document.body.appendChild( renderer.domElement );
+
+				var cubes = new THREE.Object3D();
+				
+				
+				for (var i = 0; i < 5000; i++) {
+					
+					var material = new THREE.MeshBasicMaterial( {color: new THREE.Color(Math.random(), Math.random(), Math.random()), reflectivity: 1, opacity: 0.5 } );
+					var geometry = new THREE.BoxGeometry(1, 1, 1);
+					var cube = new THREE.Mesh( geometry, material );
+					cube.position.x = getRandomArbitrary(-100, 100);
+					cube.position.y = getRandomArbitrary(-100, 100);
+					cube.position.z = getRandomArbitrary(-100, 100);
+					cubes.add(cube);
+
+				}
+				
+				scene.add(cubes);
+
+				camera.position.z = 5;
+
+				function render() {
+					//Renders 60 frames per second 
+					requestAnimationFrame( render );
+					controls.update();
+					
+					cubes.children.forEach(function(element) {
+						element.rotation.x += 0.01;
+						element.rotation.y += 0.01;
+
+						// if (element.material.color.r >= 1.0) {
+						// 	element.material.color.setRGB(0, element.material.color.g, element.material.color.b);
+						// }
+						// if (element.material.color.g >= 1.0) {
+						// 	element.material.color.setRGB(element.material.color.r, 0, element.material.color.b);
+						// }
+						// if (element.material.color.b >= 1.0) {
+						// 	element.material.color.setRGB(element.material.color.r, element.material.color.g, 0);
+						// }
+
+						if (element.material.color.r <= 0 && element.material.color.g <= 0 && element.material.color.b <= 0) {
+							element.material.color.setRGB(Math.random(), Math.random(), Math.random());
+						}
+
+						element.material.color.setRGB(element.material.color.r - 0.01, element.material.color.g - 0.01, element.material.color.b - 0.01);
+
+					}, this);
+
+					// camera.position.z -= 0.01;
+
+					renderer.render( scene, camera );
+				}
+				
+				render();
+
+				function getRandomArbitrary(min, max) {
+  					return Math.floor(Math.random() * (max - min)) + min;
+				}
+
+				function getRandomInt(min, max) {
+ 					min = Math.ceil(min);
+  					max = Math.floor(max);
+  					return Math.floor(Math.random() * (max - min)) + min;
+				}
+
+			}
+
+		</script>
+
+		</div>
+	</body>
+</html>
